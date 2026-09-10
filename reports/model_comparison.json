@@ -1,0 +1,41 @@
+{
+  "models": {
+    "logistic_regression": {
+      "roc_auc": 0.8416388953473353,
+      "pr_auc": 0.6326914342266071,
+      "f1": 0.6186252771618626,
+      "precision": 0.5284090909090909,
+      "recall": 0.7459893048128342,
+      "threshold": 0.56
+    },
+    "random_forest": {
+      "roc_auc": 0.8409168410447182,
+      "pr_auc": 0.6470472532422663,
+      "f1": 0.6139315230224321,
+      "precision": 0.5496828752642706,
+      "recall": 0.6951871657754011,
+      "threshold": 0.54
+    },
+    "xgboost": {
+      "roc_auc": 0.8375222816399288,
+      "pr_auc": 0.6519026833980192,
+      "f1": 0.6140567200986436,
+      "precision": 0.5697940503432495,
+      "recall": 0.6657754010695187,
+      "threshold": 0.6
+    }
+  },
+  "meta": {
+    "best_model": "logistic_regression",
+    "selection_criterion": "roc_auc",
+    "imbalance_handling": "class_weight='balanced' (LR/RF); scale_pos_weight (XGBoost); F1-optimized decision threshold tuned on train set",
+    "n_train": 5634,
+    "n_test": 1409,
+    "churn_rate": 0.2653698707936959,
+    "thresholds": {
+      "logistic_regression": 0.56,
+      "random_forest": 0.54,
+      "xgboost": 0.6
+    }
+  }
+}
