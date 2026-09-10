@@ -25,7 +25,7 @@ Customer retention is cheaper than acquisition. This project builds a production
 | Features | tenure, charges, contract, internet/phone add-ons, payment method, etc. |
 | License / attribution | IBM Sample Data Sets — community sample for education/demos; not for commercial redistribution claims. Cite IBM / original Kaggle mirror when sharing. |
 
-Download via script (full CSV is gitignored; a 200-row sample is included):
+Download via script (full CSV is gitignored; a small sample is included):
 
 ```bash
 python scripts/download_data.py
@@ -59,70 +59,49 @@ Selection criterion: **highest ROC-AUC** → Logistic Regression (very close to 
 
 ### Figures
 
+![ROC-AUC comparison](reports/figures/roc_auc_bars.svg)
+
 ![ROC curves](reports/figures/roc_curve.svg)
 
 ![Confusion matrix](reports/figures/confusion_matrix.svg)
 
-![SHAP / explainability](reports/figures/feature_importance.svg)
+![Feature importance](reports/figures/feature_importance.svg)
 
-Precision–Recall curves: [`reports/figures/pr_curve.svg`](reports/figures/pr_curve.svg)
+Precision–Recall: [`reports/figures/pr_curve.svg`](reports/figures/pr_curve.svg)
 
 ## Project structure
 
 ```
 customer-churn-ml/
-├── app/streamlit_app.py          # Interactive predictor
-├── data/raw/                     # Sample CSV + download target
-├── models/churn_pipeline.joblib  # Fitted sklearn Pipeline + metadata
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   └── 02_modeling.ipynb
-├── reports/
-│   ├── metrics.json
-│   ├── model_comparison.json
-│   └── figures/                  # ROC, PR, confusion, SHAP
-├── scripts/
-│   ├── download_data.py
-│   └── train.py
-├── src/
-│   ├── data.py
-│   ├── preprocess.py
-│   ├── train.py
-│   ├── evaluate.py
-│   └── explain.py
-├── requirements.txt
-└── README.md
+├── app/streamlit_app.py
+├── data/raw/                     # sample CSV + download target
+├── models/churn_pipeline.joblib.b64  # ASCII model (decode or train)
+├── notebooks/01_eda.ipynb, 02_modeling.ipynb
+├── reports/metrics.json + figures/
+├── scripts/download_data.py, train.py
+├── src/                          # data, preprocess, train, evaluate, explain
+└── requirements.txt
 ```
 
 ## How to run
 
 ```bash
-# 1. Environment
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# 2. Data
 python scripts/download_data.py
-
-# 3. Train (writes models/, reports/, figures/)
-python scripts/train.py
-
-# 4. App
+python scripts/train.py            # writes models/*.joblib (+ .b64), reports/, figures/
 streamlit run app/streamlit_app.py
 ```
 
-Optional notebooks: open `notebooks/01_eda.ipynb` and `notebooks/02_modeling.ipynb` from the project root (or set kernel cwd accordingly).
+The Streamlit app loads `models/churn_pipeline.joblib` if present, otherwise decodes `models/churn_pipeline.joblib.b64`.
 
 ## Tech stack
 
-- **Python** · pandas · NumPy  
-- **scikit-learn** (`Pipeline`, `ColumnTransformer`, metrics)  
-- **XGBoost** · **SHAP**  
-- **matplotlib** / **seaborn** · **Streamlit** · **joblib**
+Python · pandas · NumPy · scikit-learn · XGBoost · SHAP · matplotlib / seaborn · Streamlit · joblib
 
 ## Notes
 
-- Metrics above are from a real local training run (`reports/metrics.json`). Re-running may vary slightly with library versions but should be in the same range.
-- The committed model artifact lets the Streamlit app work after `pip install` (binary `models/churn_pipeline.joblib` and/or ASCII `models/churn_pipeline.joblib.b64`); retrain anytime with `scripts/train.py`.
-- Full raw CSV is not committed (~1 MB); use the download script.
+- Metrics are from a real training run (`reports/metrics.json`).
+- Full raw CSV is not committed; use the download script.
+- Re-running `scripts/train.py` regenerates exact matplotlib PNG/SVG diagnostics and the joblib pipeline.
