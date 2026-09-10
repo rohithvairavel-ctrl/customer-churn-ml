@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="240" y="28" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold">PR — Logistic Regression (test PR-AUC 0.633)</text>
+  <line x1="60" y1="300" x2="420" y2="300" stroke="#333"/>
+  <line x1="60" y1="40" x2="60" y2="300" stroke="#333"/>
+  <path d="M60,80 C140,90 200,120 260,160 S340,240 420,290" fill="none" stroke="#3498db" stroke-width="3"/>
+  <text x="240" y="340" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666">Regenerate exact curve: python scripts/train.py</text>
+</svg>
